@@ -8,11 +8,10 @@
   },
   "author": "Arshia Eskandari",
   "license": "ISC",
-  "dependencies": {
-    "hardhat": "^2.19.1"
-  },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.19.1",
+    "hardhat-shorthand": "^1.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
   }
