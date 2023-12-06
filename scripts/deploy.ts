@@ -1,26 +1,22 @@
 import { ethers } from "hardhat";
+import dotenv from "dotenv";
+dotenv.config();
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
-
-  const lockedAmount = ethers.parseEther("0.001");
-
-  const lock = await ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
-
-  await lock.waitForDeployment();
-
-  console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
+  const ERC20 = await ethers.getContractFactory("ERC20");
+  const erc20 = await ERC20.deploy(
+    "test",
+    "TEST",
+    18,
+    2,
+    process.env.FEE_RECEIVER,
+    1_000_000_000_000_000,
+    process.env.OWNER
   );
+  const address = await erc20.getAddress();
+  console.log("ERC20 deployed to ", address);
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
